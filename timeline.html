@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepsy - Timeline</title>
+
+    <!-- Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- MojoAuth (for session check consistency) -->
+    <script src="https://cdn.mojoauth.com/js/mojoauth.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo">
+                <i class="ph-fill ph-heart" style="color: var(--danger);"></i>
+                <span>Keepsy</span>
+            </div>
+            <button class="btn btn-icon" id="logout-btn" title="Logout">
+                <i class="ph ph-sign-out"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Loading State -->
+        <div id="loader" style="text-align: center; padding: 4rem; color: var(--text-secondary);">
+            <i class="ph ph-spinner ph-spin" style="font-size: 2rem;"></i>
+            <p style="margin-top: 1rem;">Unlocking memories...</p>
+        </div>
+
+        <!-- Timeline Grid -->
+        <div id="timeline-feed" class="timeline-feed" style="display: none;">
+            <!-- Memories injected here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" style="display: none; text-align: center; padding: 6rem 1rem;">
+            <i class="ph ph-images" style="font-size: 3rem; color: var(--text-secondary); opacity: 0.5;"></i>
+            <h3 style="margin-top: 1rem; font-weight: 600;">Your story starts here</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Add your first photo to begin.</p>
+        </div>
+    </main>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="add-btn" title="Add Memory">
+        <i class="ph ph-plus"></i>
+    </button>
+
+    <!-- Add Memory Modal -->
+    <div class="modal-overlay" id="add-modal">
+        <div class="modal">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 class="modal-title" style="margin-bottom: 0;">New Memory</h2>
+                <button class="btn btn-icon close-modal"><i class="ph ph-x"></i></button>
+            </div>
+
+            <form id="add-form">
+                <div class="form-group">
+                    <label class="form-label">Photo</label>
+                    <input type="file" id="entry-file" class="form-input" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" id="entry-title" class="form-input" placeholder="e.g. Our Trip to Paris"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" id="entry-date" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Note</label>
+                    <textarea id="entry-note" class="form-textarea" rows="3"
+                        placeholder="What made this moment special?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="entry-favorite">
+                        <span style="font-size: 0.9rem;">Mark as Favorite <i class="ph-fill ph-star"
+                                style="color: var(--accent);"></i></span>
+                    </label>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-icon close-modal" style="font-size: 0.9rem;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-btn">Save Memory</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/images.js"></script>
+    <script src="js/timeline.js"></script>
+</body>
+
+</html>

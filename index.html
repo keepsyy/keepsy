@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepsy - Private Space</title>
+
+    <!-- Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- MojoAuth SDK -->
+    <script src="https://cdn.mojoauth.com/js/mojoauth.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <i class="ph-fill ph-heart" style="color: var(--danger); font-size: 2rem;"></i>
+            <h1>Keepsy</h1>
+            <p>Your private memory space.</p>
+        </div>
+
+        <div id="mojoauth-passwordless-form"></div>
+        <button id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+            Enter via Email
+        </button>
+        <p id="config-warning"
+            style="display: none; color: var(--danger); font-size: 0.8rem; margin-top: 1rem; background: #fee2e2; padding: 0.5rem; border-radius: 4px;">
+            ⚠️ <b>Configuration Missing</b><br>Please update js/config.js with your Keys.
+        </p>
+
+        <div class="auth-footer">
+            <p>Secure. Private. Forever.</p>
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/guards.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check Config
+            if (CONFIG.MOJOAUTH_API_KEY.includes('YOUR_')) {
+                document.getElementById('config-warning').style.display = 'block';
+                document.getElementById('login-btn').disabled = true;
+                return;
+            }
+
+            // Auth Trigger
+            const btn = document.getElementById('login-btn');
+            btn.addEventListener('click', () => {
+                Auth.startLogin();
+            });
+
+            // Auto-trigger if not redirecting (optional, maybe distracting, let's keep it manual for "No preview" feel)
+            // Auth.startLogin(); 
+        });
+    </script>
+</body>
+
+</html>
